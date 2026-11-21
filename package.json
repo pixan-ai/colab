@@ -1,0 +1,24 @@
+{
+  "name": "colab",
+  "version": "1.0.0",
+  "description": "One prompt, several language models, one integrated answer",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "pretest": "next build",
+    "test": "node --test tests/acceptance.test.mjs"
+  },
+  "dependencies": {
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.3.0"
+  },
+  "license": "MIT",
+  "private": true
+}
