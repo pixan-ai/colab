@@ -66,16 +66,23 @@ Característica: colab solo responde a quien trae la contraseña
 
     Ejemplos:
       | modelo                                     | estado | llamadas |
-      | anthropic/claude-opus-4-5                  | 200    | 1        |
+      | anthropic/claude-opus-4.5                  | 200    | 1        |
       | anthropic/claude-sonnet-4.5                | 200    | 1        |
       | openai/gpt-5.2                             | 200    | 1        |
-      | google/gemini-3-flash-preview              | 200    | 1        |
-      | google/gemini-2.0-flash-thinking-exp-1219  | 200    | 1        |
+      | google/gemini-3-flash                      | 200    | 1        |
+      | google/gemini-3.8-flash                    | 200    | 1        |
       | google/gemini-2.5-flash                    | 200    | 1        |
-      | perplexity/sonar-pro                       | 200    | 1        |
-      | deepseek/deepseek-v3.2-exp-thinking        | 200    | 1        |
-      | xai/grok-4.1-fast-reasoning                | 200    | 1        |
-      | moonshotai/kimi-k2-thinking                | 200    | 1        |
+      | perplexity/sonar                           | 200    | 1        |
+      | deepseek/deepseek-v3.2-thinking            | 200    | 1        |
+      | spacexai/grok-4.20-reasoning               | 200    | 1        |
+      | moonshotai/kimi-k2.5                       | 200    | 1        |
+      | anthropic/claude-opus-4-5                  | 400    | 0        |
+      | google/gemini-3-flash-preview              | 400    | 0        |
+      | google/gemini-2.0-flash-thinking-exp-1219  | 400    | 0        |
+      | perplexity/sonar-pro                       | 400    | 0        |
+      | deepseek/deepseek-v3.2-exp-thinking        | 400    | 0        |
+      | xai/grok-4.1-fast-reasoning                | 400    | 0        |
+      | moonshotai/kimi-k2-thinking                | 400    | 0        |
       | openai/gpt-5.2-pro                         | 400    | 0        |
       | anthropic/claude-fable-5                   | 400    | 0        |
       | google/gemini-3-pro-image                  | 400    | 0        |
