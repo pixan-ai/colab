@@ -65,31 +65,63 @@ Característica: colab solo responde a quien trae la contraseña
     Y el gateway recibió <llamadas> llamadas con ese modelo
 
     Ejemplos:
-      | modelo                                     | estado | llamadas |
-      | anthropic/claude-opus-4.5                  | 200    | 1        |
-      | anthropic/claude-sonnet-4.5                | 200    | 1        |
-      | openai/gpt-5.2                             | 200    | 1        |
-      | google/gemini-3-flash                      | 200    | 1        |
-      | google/gemini-3.8-flash                    | 200    | 1        |
-      | google/gemini-2.5-flash                    | 200    | 1        |
-      | perplexity/sonar                           | 200    | 1        |
-      | deepseek/deepseek-v3.2-thinking            | 200    | 1        |
-      | spacexai/grok-4.20-reasoning               | 200    | 1        |
-      | moonshotai/kimi-k2.5                       | 200    | 1        |
-      | anthropic/claude-opus-4-5                  | 400    | 0        |
-      | google/gemini-3-flash-preview              | 400    | 0        |
-      | google/gemini-2.0-flash-thinking-exp-1219  | 400    | 0        |
-      | perplexity/sonar-pro                       | 400    | 0        |
-      | deepseek/deepseek-v3.2-exp-thinking        | 400    | 0        |
-      | xai/grok-4.1-fast-reasoning                | 400    | 0        |
-      | moonshotai/kimi-k2-thinking                | 400    | 0        |
-      | openai/gpt-5.2-pro                         | 400    | 0        |
-      | anthropic/claude-fable-5                   | 400    | 0        |
-      | google/gemini-3-pro-image                  | 400    | 0        |
+      | modelo                                    | estado | llamadas |
+      | anthropic/claude-opus-5.5                 | 200    | 1        |
+      | anthropic/claude-sonnet-5.5               | 200    | 1        |
+      | openai/gpt-5.5                            | 200    | 1        |
+      | google/gemini-3.8-flash                   | 200    | 1        |
+      | google/gemini-2.5-pro                     | 200    | 1        |
+      | google/gemini-3.5-flash-lite              | 200    | 1        |
+      | perplexity/sonar                          | 200    | 1        |
+      | deepseek/deepseek-v4-pro                  | 200    | 1        |
+      | spacexai/grok-4.7                         | 200    | 1        |
+      | moonshotai/kimi-k3.1-pro                  | 200    | 1        |
+      | anthropic/claude-opus-4-5                 | 400    | 0        |
+      | anthropic/claude-opus-4.5                 | 400    | 0        |
+      | anthropic/claude-sonnet-4.5               | 400    | 0        |
+      | openai/gpt-5.2                            | 400    | 0        |
+      | google/gemini-3-flash-preview             | 400    | 0        |
+      | google/gemini-3-flash                     | 400    | 0        |
+      | google/gemini-2.0-flash-thinking-exp-1219 | 400    | 0        |
+      | google/gemini-2.5-flash                   | 400    | 0        |
+      | perplexity/sonar-pro                      | 400    | 0        |
+      | deepseek/deepseek-v3.2-exp-thinking       | 400    | 0        |
+      | deepseek/deepseek-v3.2-thinking           | 400    | 0        |
+      | xai/grok-4.1-fast-reasoning               | 400    | 0        |
+      | spacexai/grok-4.20-reasoning              | 400    | 0        |
+      | moonshotai/kimi-k2-thinking               | 400    | 0        |
+      | moonshotai/kimi-k2.5                      | 400    | 0        |
+      | openai/gpt-5.5-pro                        | 400    | 0        |
+      | anthropic/claude-fable-5                  | 400    | 0        |
+      | google/gemini-3-pro-image                 | 400    | 0        |
 
   Escenario: Lo que llega al gateway lleva un tope de tokens
-    Cuando pido a /api/chat el modelo "openai/gpt-5.2" con la contraseña correcta
+    Cuando pido a /api/chat el modelo "openai/gpt-5.5" con la contraseña correcta
     Entonces el gateway recibió esa llamada con max_tokens de 4000 como máximo
+
+  # Claude Opus 5.5 y Sonnet 5.5 no aceptan temperature (catálogo del gateway, 24 nov 2026).
+  Esquema del escenario: Lo que llega al gateway no fija la temperatura
+    Cuando pido a /api/chat el modelo "<modelo>" con la contraseña correcta
+    Entonces el gateway recibió esa llamada sin temperature
+
+    Ejemplos:
+      | modelo                      |
+      | anthropic/claude-opus-5.5   |
+      | anthropic/claude-sonnet-5.5 |
+      | openai/gpt-5.5              |
+
+  # Claude 5.x piensa por defecto y ese pensamiento sale del mismo tope de tokens; genAI solo
+  # muestra la respuesta, así que lo apaga como cvool. A los demás no se les toca.
+  Esquema del escenario: Claude responde sin pensar en voz baja
+    Cuando pido a /api/chat el modelo "<modelo>" con la contraseña correcta
+    Entonces el gateway recibió esa llamada con el razonamiento <razonamiento>
+
+    Ejemplos:
+      | modelo                      | razonamiento  |
+      | anthropic/claude-opus-5.5   | apagado       |
+      | anthropic/claude-sonnet-5.5 | apagado       |
+      | openai/gpt-5.5              | sin tocar     |
+      | google/gemini-3.8-flash     | sin tocar     |
 
   Esquema del escenario: Sin contraseña configurada en el servidor, nadie entra
     Dado un servidor sin AUTH_PASSWORD

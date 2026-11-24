@@ -49,7 +49,10 @@ async function handler(req, res) {
           content: m.content
         })),
         max_tokens: maxTokens,
-        temperature: 0.7,
+        // Sin temperature: Claude 5.x la rechaza y los demás usan su valor por defecto.
+        // Claude 5.x piensa por defecto y ese pensamiento sale de max_tokens; genAI solo
+        // muestra la respuesta, así que se apaga (como cvool con thinking: disabled).
+        ...(model.startsWith('anthropic/') && { reasoning: { enabled: false } }),
         stream: true,
       }),
     });

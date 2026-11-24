@@ -127,6 +127,19 @@ const steps = [
   [/^el gateway recibió (\d+) llamadas con ese modelo$/,
     (ctx, count) => assert.equal(gatewayCalls(ctx).length, Number(count))],
 
+  [/^el gateway recibió esa llamada con el razonamiento (apagado|sin tocar)$/, (ctx, mode) => {
+    const [call] = gatewayCalls(ctx);
+    assert.ok(call, 'el gateway no recibió la llamada');
+    if (mode === 'apagado') assert.deepEqual(call.body.reasoning, { enabled: false });
+    else assert.ok(!('reasoning' in call.body), `reasoning=${JSON.stringify(call.body.reasoning)}`);
+  }],
+
+  [/^el gateway recibió esa llamada sin temperature$/, (ctx) => {
+    const [call] = gatewayCalls(ctx);
+    assert.ok(call, 'el gateway no recibió la llamada');
+    assert.ok(!('temperature' in call.body), `temperature=${call.body.temperature}`);
+  }],
+
   [/^el gateway recibió esa llamada con max_tokens de (\d+) como máximo$/, (ctx, max) => {
     const [call] = gatewayCalls(ctx);
     assert.ok(call, 'el gateway no recibió la llamada');
@@ -203,7 +216,7 @@ for (const file of readdirSync(path.join(root, 'features')).filter((f) => f.ends
           id: `escenario-${++scenarioCount}`,
           ip: newIp(),
           server: 'conClave',
-          model: 'anthropic/claude-sonnet-4.5',
+          model: 'anthropic/claude-sonnet-5.5',
         };
         for (const step of scenario.steps.map(fill)) {
           const match = steps.map(([re, fn]) => [step.match(re), fn]).find(([m]) => m);
